@@ -1,0 +1,147 @@
+<!-- base.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Restaurant Booking System{% endblock %}</title>
+        <!-- Include your CSS files here -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    </head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="{% url 'home' %}">
+                    <h1 id="logo">The Hungry Goat</h1>
+                </a>
+            </div>
+            <nav>
+                <input type="checkbox" id="menu-toggle">
+                <label for="menu-toggle" class="menu-icon">&#9776;</label>
+                <label for="menu-toggle" class="close-icon" id="close-icon">✕</label>
+                <ul class="menu">
+                    <li><a class="{% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}">Home</a></li>
+                    <li><a class="{% if request.path == '/menu/' %}active{% endif %}" href="{% url 'menu' %}">Menu</a></li>
+                    <li><a class="{% if request.path == '/booking/' %}active{% endif %}" href="{% url 'booking' %}">Booking</a></li>
+                    <li><a class="{% if request.path == '/login/' %}active{% endif %}" href="{% url 'login' %}">Login or Register</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- <section class="image-section">
+            <img class="hero-image" src="{% static 'images/slider-03.jpg' %}" alt="Hero Image">
+            <div class="group">
+                <h1>The Hungry Goat</h1>
+                <p>Eatin sdsfbkdkjewf  dkwjbbb  oiqwiohqiwfewh nfqewfoeefno feefof nonf e fequoefjnj efq</p>
+            
+                <button>Make a reservation</button>
+            </div>
+        </section>
+        
+        <section class="menu-preview-section">
+            <div class="container">
+                <h2>Menu Preview Section</h2>
+                <p>Menu items will be displayed here...</p>
+            </div>
+        </section>
+        
+        <section class="about-us-section">
+            <div class="container">
+                <h2>About Us Section</h2>
+                <p>This section will contain information about the company or organization.</p>
+            </div>
+        </section> -->
+        {% endblock %}
+    </main>
+
+    <!-- <footer>
+        <div class="container">
+            <ul class="social-links">
+                <li><a href="https://www.tiktok.com/">TikTok</a></li>
+                <li><a href="https://www.instagram.com/">Instagram</a></li>
+                <li><a href="https://twitter.com/">Twitter</a></li>
+                <li><a href="https://www.youtube.com/">YouTube</a></li>
+            </ul>
+        </div>
+    </footer> -->
+
+    <script>
+        let screenWidth = window.innerWidth;
+        const menuToggle = document.getElementById('menu-toggle');
+        const menu = document.querySelector('nav ul');
+        const menuIcon = document.querySelector('.menu-icon');
+        const closeIcon = document.querySelector('.close-icon');
+    
+        // Function to handle menu display based on screen size
+        function handleMenuDisplay() {
+            if (screenWidth > 768) {
+                // Display menu items horizontally
+                menu.style.display = 'flex';
+                menu.style.flexDirection = 'row';
+                menu.style.justifyContent = 'center';
+                const menuItems = menu.querySelectorAll('li');
+                menuItems.forEach(item => {
+                item.style.display = 'block'
+            });
+                // Hide burger icon and close icon
+                menuIcon.style.display = 'none';
+                closeIcon.style.display = 'none';
+            } else {
+                // Display menu items vertically
+                menu.style.display = 'block';
+                const menuItems = menu.querySelectorAll('li');
+                menuItems.forEach(item => {
+                item.style.display = 'none'
+            });
+                // Show or hide burger icon and close icon based on checkbox state
+                if (menuToggle.checked) {
+                    menuIcon.style.display = 'none';
+                    closeIcon.style.display = 'block';
+                } else {
+                    menuIcon.style.display = 'block';
+                    closeIcon.style.display = 'none';
+                }
+            }
+        }
+    
+        // Call the function initially
+        handleMenuDisplay();
+    
+        // Add event listener to toggle menu visibility
+        menuToggle.addEventListener('change', function() {
+            handleMenuDisplay();
+            const menuItems = menu.querySelectorAll('li');
+            menuItems.forEach(item => {
+                item.style.display = this.checked ? 'block' : 'none';
+            });
+    
+            // Toggle between menu icon and close icon
+            if (this.checked) {
+                menuIcon.style.display = 'none';
+                closeIcon.style.display = 'block';
+            } else {
+                menuIcon.style.display = 'block';
+                closeIcon.style.display = 'none';
+            }
+        });
+    
+        // Add event listener to handle window resize
+        window.addEventListener('resize', function() {
+            // Update screenWidth variable
+            screenWidth = window.innerWidth;
+            // Call the function to handle menu display
+            handleMenuDisplay();
+        });
+    </script>
+
+</body>
+</html>
